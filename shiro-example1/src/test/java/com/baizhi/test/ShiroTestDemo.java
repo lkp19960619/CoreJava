@@ -46,4 +46,48 @@ public class ShiroTestDemo {
         boolean authenticated = subject.isAuthenticated();
         System.out.println(authenticated);
     }
+
+    @Test
+    public void test2() {
+        /**
+         * 先认证
+         */
+//        1.读取配置文件，得到安全管理器工厂
+        IniSecurityManagerFactory securityManagerFactory = new IniSecurityManagerFactory("classpath:static/shiro.ini");
+//        2.获去安全管理器
+        SecurityManager securityManager = securityManagerFactory.getInstance();
+//        3.把安全管理器给工具类，相当于Subject和安全管理器建立了联系
+        SecurityUtils.setSecurityManager(securityManager);
+//        4.通过安全管理器获取主体
+        Subject subject = SecurityUtils.getSubject();
+//        5.封装令牌 完成认证
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        try {
+            subject.login(token);
+            System.out.println("成功");
+        } catch (Exception e) {
+            System.out.println("失败");
+        }
+        /**
+         * 授权
+         */
+//        获取认证状态
+        boolean authenticated = subject.isAuthenticated();
+        if (authenticated) {
+//            认证成功 开始授权[代码式授权：在java代码中校验权限]、[注解式授权：通过注解校验权限]、[标签式授权：在页面中校验权限]
+            //isPermitted 查看用户有没有某个权限
+            boolean permitted = subject.isPermitted("guru:delete");
+            if (permitted) System.out.println("zhangsan有删除上师的权限");
+
+            //根据角色校验
+            boolean vip1 = subject.hasRole("vip1");
+            if(vip1){
+                System.out.println("有角色vip1可以调用删除上师的方法");
+            }else{
+                System.out.println("没有该角色，不能调用删除上师的方法");
+            }
+        }
+    }
+
+
 }
