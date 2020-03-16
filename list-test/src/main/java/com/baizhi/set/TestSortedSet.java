@@ -21,7 +21,7 @@ public class TestSortedSet {
                 else return o1.name.compareTo(o2.name);
             }
         };
-        Set<Worker> workers = new TreeSet<>();
+        Set<Worker> workers = new TreeSet<>(c);
         workers.add(new Worker("Huxz", 18));
         workers.add(new Worker("Liucy", 30));
         workers.add(new Worker("Liucy", 30));
