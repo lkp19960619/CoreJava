@@ -17,11 +17,11 @@ public class TestForkJoinSort {
             data[i] = random.nextInt(5000000);
         }
         //创建ForkJoinPool对象
-//        ForkJoinPool pool = new ForkJoinPool();
-//        MySortTask task = new MySortTask(data, 0, data.length);
-//        //提交任务
-//        pool.invoke(task);
-        Arrays.parallelSort(data);
+        ForkJoinPool pool = new ForkJoinPool();
+        MySortTask task = new MySortTask(data, 0, data.length);
+        //提交任务
+        pool.invoke(task);
+//        Arrays.parallelSort(data);
         for(int i = 0;i<data.length;i++){
             System.out.println(data[i]);
         }
