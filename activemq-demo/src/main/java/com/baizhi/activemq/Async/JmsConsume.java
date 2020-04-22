@@ -1,16 +1,17 @@
-package com.baizhi.activemq.queue;
+package com.baizhi.activemq.Async;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.apache.activemq.ActiveMQMessageConsumer;
 
 import javax.jms.*;
 
 /**
  * @Author: 李开鹏
- * @Date: 2020/4/2 22:13
+ * @Date: 2020/4/21 16:16
  * @Version 1.0
  */
-public class JmsConsume1 {
-    public static final String ACTIVEMQ_URL = "failover:(tcp://192.168.170.20:61616,tcp://192.168.170.20:61617,tcp://192.168.170.20:61618)?randomize=false";
+public class JmsConsume {
+    public static final String ACTIVEMQ_URL = "tcp://192.168.170.20:61616";
     public static final String QUEUE_NAME = "queue-cluster";
 
     public static void main(String[] args) throws JMSException {
@@ -24,9 +25,9 @@ public class JmsConsume1 {
         //4.创建目的地
         Queue queue = session.createQueue(QUEUE_NAME);
         //5.创建消费者对象
-        MessageConsumer messageConsumer = session.createConsumer(queue);
+        ActiveMQMessageConsumer activeMQMessageConsumer = (ActiveMQMessageConsumer) session.createConsumer(queue);
         while (true) {
-            TextMessage receive = (TextMessage) messageConsumer.receive(4000l);
+            TextMessage receive = (TextMessage) activeMQMessageConsumer.receive(4000l);
             if (null != receive) {
                 System.out.println("*****消费者接收到消息*****" + receive.getText());
             } else {
@@ -34,7 +35,7 @@ public class JmsConsume1 {
             }
         }
         //6.关闭资源
-        messageConsumer.close();
+        activeMQMessageConsumer.close();
         session.close();
         connection.close();
     }

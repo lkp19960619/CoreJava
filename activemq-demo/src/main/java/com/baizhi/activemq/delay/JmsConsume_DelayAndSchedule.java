@@ -1,4 +1,4 @@
-package com.baizhi.activemq.queue;
+package com.baizhi.activemq.delay;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 
@@ -7,12 +7,12 @@ import java.io.IOException;
 
 /**
  * @Author: 李开鹏
- * @Date: 2020/4/2 22:37
+ * @Date: 2020/4/21 18:04
  * @Version 1.0
  */
-public class JmsConsume2 {
+public class JmsConsume_DelayAndSchedule {
     public static final String ACTIVEMQ_URL = "tcp://192.168.170.20:61616";
-    public static final String QUEUE_NAME = "jdbc01";
+    public static final String QUEUE_NAME = "delay-queue";
 
     public static void main(String[] args) throws JMSException, IOException {
         //1.创建连接工厂

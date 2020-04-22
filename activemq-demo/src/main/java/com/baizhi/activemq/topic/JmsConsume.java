@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class JmsConsume {
     public static final String ACTIVEMQ_URL = "tcp://192.168.170.20:61616";
-    public static final String TOPIC_NAME = "topic01";
+    public static final String TOPIC_NAME = "jdbc-topic-persistent";
 
     public static void main(String[] args) throws JMSException, IOException {
         ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory("admin", "admin", ACTIVEMQ_URL);

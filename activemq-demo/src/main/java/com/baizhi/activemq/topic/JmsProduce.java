@@ -11,7 +11,7 @@ import javax.jms.*;
  */
 public class JmsProduce {
     public static final String ACTIVEMQ_URL = "tcp://192.168.170.20:61616";
-    public static final String TOPIC_NAME = "topic01";
+    public static final String TOPIC_NAME = "jdbc-topic-persistent";
 
     public static void main(String[] args) throws JMSException {
         //1.创建连接工厂
@@ -25,6 +25,8 @@ public class JmsProduce {
         Topic topic = session.createTopic(TOPIC_NAME);
         //5.创建生产者
         MessageProducer producer = session.createProducer(topic);
+        //生产者持久化
+        producer.setDeliveryMode(DeliveryMode.PERSISTENT);
         //6.生产消息
         for (int i = 1; i <= 3; i++){
             //7.创建消息

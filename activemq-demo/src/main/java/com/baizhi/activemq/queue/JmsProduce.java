@@ -10,8 +10,8 @@ import javax.jms.*;
  * @Version 1.0
  */
 public class JmsProduce {
-    public static final String ACTIVEMQ_URL = "tcp://192.168.170.20:61616";
-    public static final String QUEUE_NAME = "queue01";
+    public static final String ACTIVEMQ_URL = "failover:(tcp://192.168.170.20:61616,tcp://192.168.170.20:61617,tcp://192.168.170.20:61618)?randomize=false";
+    public static final String QUEUE_NAME = "queue-cluster";
 
     public static void main(String[] args) throws JMSException {
 
@@ -27,6 +27,8 @@ public class JmsProduce {
         Queue queue = session.createQueue(QUEUE_NAME);
         //5.创建消息的生产者
         MessageProducer messageProducer = session.createProducer(queue);
+        //开启持久化
+        messageProducer.setDeliveryMode(DeliveryMode.PERSISTENT);
         //6.通过messageProducer生产消息发送到队列中
         for (int i = 1; i <= 3; i++) {
             //7.创建消息
